@@ -8,9 +8,10 @@ public class QuadraticEquation {
 
 	public QuadraticEquation(double a, double b, double c) {
 
-		if(a <= 0 || b <= 0){	// not possible to calculate roots
+		// don't put this in
+		/*if(a <= 0 || b <= 0){	// not possible to calculate roots
 			System.exit(0);
-		}
+		}*/
 		
 		this.a = a;
 		this.b = b;

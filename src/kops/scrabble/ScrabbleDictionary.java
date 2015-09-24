@@ -1,7 +1,10 @@
 package kops.scrabble;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Scanner;
 
@@ -15,20 +18,22 @@ public class ScrabbleDictionary {
 
 	/**
 	 * @return true if the word is in the dictionary. If not, return false
+	 * @throws IOException 
 	 */
-	public boolean contains() {
+	public boolean contains() throws IOException {
 
-		Scanner fileinput;
+		BufferedReader fileinput;
 		HashSet<String> set = new HashSet<String>();
 
 		
 		try {
-			fileinput = new Scanner(new File("./US.dic"));
+			fileinput = new BufferedReader(new FileReader("./US.dic"));
 
 			// read through file and add each word to the set
-			while (fileinput.hasNext()) {
-				String w = fileinput.next();
-				set.add(w);	
+			String line;
+			while ((line = fileinput.readLine())!=null) {
+	
+				set.add(line);	
 			}
 			fileinput.close();
 
