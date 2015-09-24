@@ -2,7 +2,7 @@ package kops.scrabble;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
 
 public class ScrabbleDictionary {
@@ -19,33 +19,28 @@ public class ScrabbleDictionary {
 	public boolean contains() {
 
 		Scanner fileinput;
-		ArrayList<String> list = new ArrayList<String>();
+		HashSet<String> set = new HashSet<String>();
 
+		
 		try {
-			fileinput = new Scanner(new File("US.dic"));
+			fileinput = new Scanner(new File("./US.dic"));
 
-			// read through file and add each word to the ArrayList
+			// read through file and add each word to the set
 			while (fileinput.hasNext()) {
 				String w = fileinput.next();
-				list.add(w);	
+				set.add(w);	
 			}
-			
-			// check if the filled ArrayList does not contain the word
-			if (!(list.contains(this.word))) {
-				fileinput.close();
-				return !(list.contains(this.word));
-			}
+			fileinput.close();
 
-			
 			
 		} catch (FileNotFoundException e) {
 			e.getMessage();
+			
 		}
 
 		
-
-		// if a match is found, the word is in the dictionary
-			return true;
+		// check if the filled set contains the word and return result			
+		return set.contains(this.word);
 
 	}
 }
