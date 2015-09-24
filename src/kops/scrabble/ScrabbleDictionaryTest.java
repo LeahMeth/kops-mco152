@@ -12,6 +12,7 @@ public class ScrabbleDictionaryTest {
 		ScrabbleDictionary sd = new ScrabbleDictionary("smile");
 		boolean cont = sd.contains();
 		
+		
 		Assert.assertEquals(true, cont);
 		
 	}
