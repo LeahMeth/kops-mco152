@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class MostAnagrams {
 
 	public static void main(String[] args) throws FileNotFoundException {
-		Scanner fileInput = new Scanner(new FileReader("./US.dic"));
+		BufferedReader fileInput = new BufferedReader(new FileReader("./US.dic"));
 		
 		// create a HashSet that will hold groups of anagrams 
 		HashSet<HashSet<String>> anagramGroups = new HashSet<HashSet<String>>();
