@@ -31,6 +31,7 @@ public class TopTenLocations {
 			location = sighting.getLocation();
 			
 			numFound = map.get(location);
+			
 		///////////////////////////////////why nulls?////////////////////	
 			if(numFound == null){
 				map.put(location, 1);	//add location
