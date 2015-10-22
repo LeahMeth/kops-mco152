@@ -1,7 +1,7 @@
 package kops.gui;
 
 import java.awt.Container;
-import java.awt.FlowLayout;
+//import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -19,7 +19,7 @@ public class QuadraticGUI extends JFrame {
 
 	public QuadraticGUI() {
 		setTitle("Quadratic Equation");
-		setSize(600, 600);
+		setSize(200, 230);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Container cont = getContentPane();
@@ -29,33 +29,52 @@ public class QuadraticGUI extends JFrame {
 		a = new JLabel();
 		a.setText("A:");
 		add(a);
+		
 		aInput = new JTextField();
 		add(aInput);
-		aInput = aInput.getText();
+		
 
 		b = new JLabel();
 		b.setText("B:");
 		add(b);
+		
 		bInput = new JTextField();
 		add(bInput);
+		
 
 		c = new JLabel();
 		c.setText("C:");
 		add(c);
+		
 		cInput = new JTextField();
 		add(cInput);
 		
+		
+		x = new JLabel();
+		x.setText("X=");
+		add(x);
 
 		calculate = new JButton("Calculate");
 		add(calculate);
+		
+		result = new JLabel();
+		add(result);
+		
 		calculate.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				QuadraticEquation q = new QuadraticEquation(aInput, bInput, cInput);
+				Double ainput = Double.parseDouble(aInput.getText());
+				double binput = Double.parseDouble(bInput.getText());
+				double cinput = Double.parseDouble(cInput.getText());
+				
+				
+				QuadraticEquation q = new QuadraticEquation(ainput, binput, cinput);
+				String sresult = (q.getPositiveX().toString()+", "+q.getNegativeX().toString());
+				result.setText(sresult);
+					
 				
 			}
-
 		});
 
 	}

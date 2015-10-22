@@ -1,8 +1,6 @@
 package kops.gui;
 
-//import javax.swing.JFrame;
-
-public class GUIDemo {
+public class RunQuad {
 
 	public static void main(String args[]){
 	

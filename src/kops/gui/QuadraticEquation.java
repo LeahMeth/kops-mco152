@@ -18,12 +18,12 @@ public class QuadraticEquation {
 		this.c = c;
 	}
 
-	public double getPositiveX() {
+	public Double getPositiveX() {
 
 		return (-(b) + (Math.sqrt(b * b - (4 * a * c)))) / (2 * a);
 	}
 
-	public double getNegativeX() {
+	public Double getNegativeX() {
 
 		return (-(b) - (Math.sqrt(b * b - (4 * a * c)))) / (2 * a);
 
