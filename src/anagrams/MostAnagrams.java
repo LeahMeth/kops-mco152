@@ -1,7 +1,9 @@
-package kops.anagrams;
+package anagrams;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 //import java.util.HashMap;
 import java.util.HashSet;
@@ -11,7 +13,7 @@ import java.util.Scanner;
 
 public class MostAnagrams {
 
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws IOException {
 		BufferedReader fileInput = new BufferedReader(new FileReader("./US.dic"));
 		
 		// create a HashSet that will hold groups of anagrams 
@@ -26,7 +28,7 @@ public class MostAnagrams {
 		String current;	// the current word comparing
 		
 		//set up first group and add it to HashSet of groups
-		current = fileInput.next();
+		current = fileInput.readLine();
 		HashSet<String> group1 = new HashSet<String>();
 		group1.add(current);
 		anagramGroups.add(group1);
@@ -37,8 +39,8 @@ public class MostAnagrams {
 		MostAnagrams m = new MostAnagrams();
 		
 		
-		while(fileInput.hasNext()){	// for each word in dictionary file
-			current = fileInput.next();
+		while((fileInput.readLine())!=null){	// for each word in dictionary file
+			current = fileInput.readLine();
 			
 			for(HashSet<String> group: anagramGroups){	// check each group
 				
