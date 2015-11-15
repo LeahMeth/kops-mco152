@@ -24,21 +24,25 @@ public class TopTenLocations {
 		
 		//read through array and either add location to HashMap or increment amount for location
 		String location;
-		Integer numFound;
+		Integer numFound = 0;
+		for ( UFOSighting ufo: array ) {
+	            numFound = map.get(lo);
+	            if ( value == null ) {
+	                map.put(key, 1);
+	            }
+	            else {
+	                map.put(key, value+1);
+	            }
+	        }
 		for (int i = 0; i < array.length; i++){	//first access the sighting's location
 			
 			UFOSighting sighting = new UFOSighting(array[i]);
 			location = sighting.getLocation();
 			
-			numFound = map.get(location);
+			//numFound = map.get(location);
+
+			map.put(location, numFound + 1);	//increment location's number of sightings
 			
-		///////////////////////////////////why nulls?////////////////////	
-			if(numFound == null){
-				map.put(location, 1);	//add location
-			}
-			else{
-				map.put(location, numFound + 1);	//increment location's number of sightings
-			}
 			
 		}
 		
@@ -53,7 +57,7 @@ public class TopTenLocations {
 				}
 			}
 			
-			System.out.println((i+1) +". "+topLocation+" - " +topSightings+" sightings");
+			System.out.println((i+1) +"."+topLocation+" - " +map.get(topLocation)+" sightings");
 			map.remove(topLocation);
 		}
 		in.close();

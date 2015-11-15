@@ -19,11 +19,10 @@ public class UPSDatabaseTest {
 		UPSDatabase ups = new UPSDatabase();
 		ups.addPackageToLocation(l, p);
 		
-		Location l2 = ups.getLocation(p);
-		Assert.assertEquals(l, l2);
+		Assert.assertTrue((ups.getPackages(l)).contains(p));
 		
-		Set<Package> packages = ups.getPackages(l);
-		Assert.assertEquals(p, packages.toArray()[0]);
+		Assert.assertEquals(l, ups.getLocation(p));
+		
 	}
 	
 	@Test 
@@ -34,6 +33,21 @@ public class UPSDatabaseTest {
 	 * Verify that the Package is NOT returned when calling getPackage() with the first Location.
 	 */
 	public void testUpdatePackageLocation() {
+		//add a package
+		Package p = new Package("1");
+		Location old = new Location(30, 40);
+		UPSDatabase ups = new UPSDatabase();
+		ups.addPackageToLocation(old, p);
+		
+		//update package and check
+		Location newLocation = new Location(50, 60);
+		ups.updatePackageLocation(p, newLocation);
+		
+		Assert.assertTrue(ups.getPackages(newLocation).contains(p));
+		
+		Assert.assertEquals(newLocation, ups.getLocation(p));
+		
+		Assert.assertFalse(ups.getPackages(old).contains(p));
 		
 	}
 	
@@ -43,7 +57,17 @@ public class UPSDatabaseTest {
 	 * a Location without Packages.
 	 */
 	public void testGetPackagesReturnsAnEmptySet() {
-		Assert.fail("test not implemented");
+		UPSDatabase ups = new UPSDatabase();
+		Location l = new Location(20, 20);
+		Package p = new Package("1");
+		ups.addPackageToLocation(l, p);
+		
+		Location l2 = new Location(30, 30);
+		ups.updatePackageLocation(p, l2);
+		
+		Set<Package> temp = ups.getPackages(l);
+		
+		Assert.assertTrue(temp.isEmpty());
 	}
 	
 	@Test
@@ -51,7 +75,10 @@ public class UPSDatabaseTest {
 	 * Verify that calling getLocation() on an unknown Package returns null.
 	 */
 	public void testGetLocationReturnsNull() {
-		Assert.fail("test not implemented");
+		Package p = new Package("1");
+		UPSDatabase ups = new UPSDatabase();
+		
+		Assert.assertNull(ups.getLocation(p));
 	}
 	
 }
