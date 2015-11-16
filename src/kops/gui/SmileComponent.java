@@ -7,6 +7,10 @@ import javax.swing.JComponent;
 
 public class SmileComponent extends JComponent {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int y = 1;
 	
 	@Override 

@@ -8,8 +8,8 @@ public class ShowDuplicates {
 
 		String array[] = new String[] { "A", "B", "B", "B", "C", "C" };
 
-		HashSet set = new HashSet<String>();
-		HashSet set2 = new HashSet();
+		HashSet<String> set = new HashSet<String>();
+		HashSet<String> set2 = new HashSet<String>();
 
 		for (String s : array) {
 			if (set.contains(s)) {

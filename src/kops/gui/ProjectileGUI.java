@@ -8,6 +8,11 @@ import javax.swing.*;
 
 public class ProjectileGUI extends JFrame{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private JLabel time, velocity, angle, result;
 	private JTextField tInput, vInput, aInput;
 	private JButton calculate;

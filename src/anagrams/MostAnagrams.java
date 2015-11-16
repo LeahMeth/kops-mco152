@@ -1,19 +1,16 @@
 package anagrams;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
-//import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Scanner;
-//import java.io.BufferedReader;
 
 public class MostAnagrams {
 
 	public static void main(String[] args) throws IOException {
+		@SuppressWarnings("resource")
 		BufferedReader fileInput = new BufferedReader(new FileReader("./US.dic"));
 		
 		// create a HashSet that will hold groups of anagrams 

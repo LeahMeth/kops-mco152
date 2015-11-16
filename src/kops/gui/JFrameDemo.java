@@ -13,6 +13,10 @@ import javax.swing.JTextField;
 
 public class JFrameDemo extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JLabel label, label2;
 	
 	public JFrameDemo(){

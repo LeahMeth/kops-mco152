@@ -4,11 +4,7 @@ import java.util.HashMap;
 
 public class MorseCode {
 
-	private String m;
-
 	public MorseCode() {
-
-		this.m = null;
 	}
 
 	

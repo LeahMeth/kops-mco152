@@ -13,6 +13,11 @@ import javax.swing.JTextField;
 
 public class QuadraticGUI extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private JLabel a, b, c, x, result;
 	private JTextField aInput, bInput, cInput;
 	private JButton calculate;
