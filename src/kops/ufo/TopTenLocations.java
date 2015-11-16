@@ -23,28 +23,19 @@ public class TopTenLocations {
 		
 		
 		//read through array and either add location to HashMap or increment amount for location
-		String location;
+		
 		Integer numFound = 0;
 		for ( UFOSighting ufo: array ) {
-	            numFound = map.get(lo);
-	            if ( value == null ) {
-	                map.put(key, 1);
+	            numFound = map.get(ufo.getLocation());	//the amount of times this location was reported
+	            if (numFound == null) {
+	                map.put(ufo.getLocation(), 1);
 	            }
 	            else {
-	                map.put(key, value+1);
+	            	numFound = map.get(ufo.getLocation());
+	                map.put(ufo.getLocation(), numFound + 1);	//increase this location's occurrences by one
 	            }
 	        }
-		for (int i = 0; i < array.length; i++){	//first access the sighting's location
-			
-			UFOSighting sighting = new UFOSighting(array[i]);
-			location = sighting.getLocation();
-			
-			//numFound = map.get(location);
-
-			map.put(location, numFound + 1);	//increment location's number of sightings
-			
-			
-		}
+		
 		
 		
 		//find and print the top ten locations from the HashMap 
@@ -53,12 +44,19 @@ public class TopTenLocations {
 		for(int i = 0; i < 10; i++){
 			for(Map.Entry<String, Integer> entry : map.entrySet()){
 				if(entry.getValue() > topSightings){
+					topSightings = entry.getValue();
 					topLocation = entry.getKey();
 				}
+				
+			
+			
 			}
+			
 			
 			System.out.println((i+1) +"."+topLocation+" - " +map.get(topLocation)+" sightings");
 			map.remove(topLocation);
+			topLocation = null;
+			topSightings = 0;
 		}
 		in.close();
 	}
