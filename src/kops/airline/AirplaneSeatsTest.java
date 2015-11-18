@@ -1,5 +1,7 @@
 package kops.airline;
 
+import java.util.ArrayList;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -43,7 +45,9 @@ public class AirplaneSeatsTest {
 	 * Tests that reserve() reserves a seat correctly.
 	 */
 	public void testReserve() throws AlreadyReservedException, SeatOutOfBoundsException {
-		Assert.fail("Test not implemented");
+		AirplaneSeats seats = new AirplaneSeats(3,4);
+		seats.reserve("B3");
+		Assert.assertTrue(seats.isReserved("B3"));
 	}
 	
 	@Test
@@ -70,16 +74,25 @@ public class AirplaneSeatsTest {
 	 * a seat that is outside the bounds of the plane. 
 	 */
 	public void testReserveThrowsSeatOutOfBoundsException() throws AlreadyReservedException {
-		Assert.fail("Test not implemented");
+		AirplaneSeats seats = new AirplaneSeats(2,2);
+		try{
+			seats.reserve("A3");
+			Assert.fail("reserve should have thrown an exception");
+		}catch(SeatOutOfBoundsException e){
+			
+		}
 	}
 	
 	@Test
 	/**
 	 * Tests that isFullPlane() returns false if there are empty seats on the plane. 
 	 */
-	//add a throws declaration
-	public void testIsPlaneFullReturnsFalse() {
-		Assert.fail("Test not implemented");
+
+	public void testIsPlaneFullReturnsFalse() throws AlreadyReservedException, SeatOutOfBoundsException {
+		AirplaneSeats seats = new AirplaneSeats(2,2);
+		seats.reserveAll("A1","B1");
+		Assert.assertTrue(seats.isPlaneFull() == false);
+	
 	}
 	
 	@Test
@@ -87,8 +100,11 @@ public class AirplaneSeatsTest {
 	 * Tests that isFullPlane() returns true if there are no empty seats on the plane. 
 	 */
 	//add a throws declaration
-	public void testIsPlaneFullReturnsTrue() {
-		Assert.fail("Test not implemented");
+	public void testIsPlaneFullReturnsTrue() throws AlreadyReservedException, SeatOutOfBoundsException {
+		AirplaneSeats seats = new AirplaneSeats(2,2);
+		seats.reserveAll("A1","B1");
+		seats.reserveAll("A2","B2");
+		Assert.assertTrue(seats.isPlaneFull() == true);
 	}
 	
 	@Test
@@ -96,8 +112,17 @@ public class AirplaneSeatsTest {
 	 * Tests that reserveGroup() reserves the correct seats when called on an empty plane.
 	 */
 	
-	public void testReserveGroupOnEmptyPlane() throws NotEnoughSeatsException {
-		Assert.fail("Test not implemented");
+	public void testReserveGroupOnEmptyPlane() throws NotEnoughSeatsException, AlreadyReservedException, SeatOutOfBoundsException {
+		AirplaneSeats seats = new AirplaneSeats(3,3);
+		ArrayList<String> reservedSeats = seats.reserveGroup(3);
+		ArrayList<String> expected = new ArrayList<String>();
+		
+		expected.add("A1");
+		expected.add("B1");
+		expected.add("C1");
+		
+		Assert.assertEquals(expected, reservedSeats);
+		
 	}
 
 	@Test
@@ -106,8 +131,18 @@ public class AirplaneSeatsTest {
 	 * seats already reserved. For instance, on a 3,4 airplane whose "A1" is occupied, 
 	 * calling reserveGroup(4) should return a list of elements ["A2", "B2", "C2", "D2"]
 	 */
-	public void testReserveGroupOnPartiallyFilledPlane() throws NotEnoughSeatsException {
-		Assert.fail("Test not implemented");
+	public void testReserveGroupOnPartiallyFilledPlane() throws NotEnoughSeatsException, AlreadyReservedException, SeatOutOfBoundsException {
+		AirplaneSeats seats = new AirplaneSeats(3,4);
+		seats.reserve("A1");
+		ArrayList<String> reservedSeats = seats.reserveGroup(4);
+		ArrayList<String> expected = new ArrayList<String>();
+		
+		expected.add("A2");
+		expected.add("B2");
+		expected.add("C2");
+		expected.add("D2");
+		
+		Assert.assertEquals(expected, reservedSeats);
 	}
 	
 	@Test
@@ -115,8 +150,17 @@ public class AirplaneSeatsTest {
 	 * Tests that reserveGroup() throws NotEnoughSeatsException if there are not enough 
 	 * seats available together for the group.
 	 */
-	public void testReserveGroupThrowsNotEnoughSeatsException() {
-		Assert.fail("Test not implemented");
+	public void testReserveGroupThrowsNotEnoughSeatsException() throws AlreadyReservedException, SeatOutOfBoundsException {
+		AirplaneSeats seats = new AirplaneSeats(2,2);
+		try{
+			seats.reserve("A1");
+			seats.reserve("A2");
+			
+			seats.reserveGroup(2);
+			Assert.fail("reserveGroup() should have thrown an exception");
+		}catch(NotEnoughSeatsException e){
+			
+		}
 	}
 	
 }

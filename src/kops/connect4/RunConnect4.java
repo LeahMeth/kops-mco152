@@ -1,17 +1,19 @@
 package kops.connect4;
 
+import javax.swing.JFrame;
+
 public class RunConnect4 {
 
 	public static void main(String[] args) {
 		Connect4Board board = new Connect4Board();
-		char playAgain = 0;
+		boolean playAgain = false;
 		
-		while(playAgain != 'n'){
+		while(playAgain == true){
 			board.setUp();
 			board.startGame();
 			playAgain = board.playAgain();
 		}
-	
+
 	}
 
 }

@@ -2,6 +2,7 @@ package kops.airline;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class is part of an Airline Reservation system. It holds seats that are reserved.
@@ -13,9 +14,7 @@ public class AirplaneSeats {
 	private int columns;
 	private String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	
-	// a list of all seats on board
-	private ArrayList<String> seatNames = new ArrayList<String>();
-	
+
 	// map will hold a list of all seats and whether or not they are reserved 
 	private HashMap<String, Boolean> seatReservations = new HashMap<String, Boolean>();	
 	
@@ -28,21 +27,15 @@ public class AirplaneSeats {
 		this.columns = columns;
 		String columnName;
 		
-		// fill arraylist
+		// fill hashmap with seat names and set their reserved status to false
 		for(int i = 1; i < rows+1; i++){
 			for(int j = 0; j< columns; j++){
 				columnName = Character.toString(alphabet.charAt(j));
-				seatNames.add(columnName+ Integer.toString(i));					
+				seatReservations.put((columnName+ Integer.toString(i)), false);					
 			}
-			//seatNames.add("\n");	// add a gap after each row is filled		
-			
-		}
-		
-		// fill hashmap with all the seats(keys) and set their values to false (not reserved yet)
-		for(String seat: seatNames){
-			seatReservations.put(seat, false);
-		}
 	
+		}
+
 	}
 	
 	/**
@@ -52,7 +45,7 @@ public class AirplaneSeats {
 	 * @throws SeatOutOfBoundsException if the seat is outside the columns and rows set in the constructor
 	 */
 	public void reserve( String seatName ) throws AlreadyReservedException, SeatOutOfBoundsException {
-		if(!(seatNames.contains(seatName))){
+		if(!(seatReservations.containsKey(seatName))){
 			throw new SeatOutOfBoundsException();
 		}
 		
@@ -63,14 +56,9 @@ public class AirplaneSeats {
 		else{
 			this.seatReservations.put(seatName, true);
 		}
-		
-		
-		
 	}
 	
 
-	
-	
 	/**
 	 * @param seatName is a String in the form of "A1" where "A" is the column and 1 is the row. 
 	 * 			The first row on the plane is 1.
@@ -79,7 +67,6 @@ public class AirplaneSeats {
 	public boolean isReserved( String seatName ) {
 		return (this.seatReservations.get(seatName));
 	}
-	
 	
 	
 	/**
@@ -94,8 +81,6 @@ public class AirplaneSeats {
 			reserve(seatName);
 		}
 	}
-	
-	
 	
 	
 	/**
@@ -119,7 +104,7 @@ public class AirplaneSeats {
 		
 		StringBuilder b = new StringBuilder();
 		// first row
-		b.append(" ");
+		b.append("  ");
 		char letter = 'A';
 		for(int i = 0; i < columns; i++){
 			b.append(letter);
@@ -143,11 +128,11 @@ public class AirplaneSeats {
 				}
 				
 			}
-		//	b.append("\n");		// go to next row
+		b.append("\n");		// go to next row
 			
 		}	
 		
-		return null;
+		return b.toString();
 	}
 	
 	
@@ -161,41 +146,53 @@ public class AirplaneSeats {
 	 * @param numberOfSeatsTogether the number of seats to look for that are together
 	 * @return an ArrayList of seatNames of the seats that have been reserved.
 	 * @throws NotEnoughSeatsException if there are not enough seats together to reserve.
+	 * @throws SeatOutOfBoundsException 
+	 * @throws AlreadyReservedException 
 	 */
 
 	// if want 4 in a row, will go to next row if one is taken
-	public ArrayList<String> reserveGroup( int numberOfSeatsTogether ) throws NotEnoughSeatsException {
+	public ArrayList<String> reserveGroup( int numberOfSeatsTogether ) throws NotEnoughSeatsException, AlreadyReservedException, SeatOutOfBoundsException {
 		
 		ArrayList<String> reservedGroup = new ArrayList<String>();		
+		String seatName;
+		int counter = 0;
 		
-		ArrayList<Boolean> rowStatus = new ArrayList<Boolean>();	// will hold a list of which seats in a row are filled
-																	// and which are empty
-		String twoD[][] = null;
-		String s;
 		
-		//fill 2D array with all seatnames - should have done this earlier
-		for(int i = 0; i < rows; i++){
-			for(int j = 0; j < columns; j++){
-				String columnName = Character.toString(alphabet.charAt(j));
-				s = columnName+ Integer.toString(i+1);	
+		for(int i = 1; i < rows+1; i++){ 		//going row by row
+			
+			for(int j = 0; j < columns; j++){		//if this row contains enough consecutive seats, 
+													//return the consecutive seats.
+													// otherwise, go to the next row and check			
+				//get seat name
+				seatName = Character.toString(alphabet.charAt(j)) + Integer.toString(i);
 				
-				twoD[i][j] = s;
-					
+				if(counter < numberOfSeatsTogether){
+					if(isReserved(seatName) == false){
+					reservedGroup.add(seatName);
+					counter++;		//increment amount of consecutive seats
+					}
+					else{	//this reserved seat breaks up the succession, so start calculations over again
+						reservedGroup.removeAll(reservedGroup);
+						counter = 0;
+						break;
+					}
+				}
+				else {	//found enough consecutive seats
+					for(String seat: reservedGroup){
+						reserve(seat);
+					}
+					return reservedGroup;
+				}
 				
-				
-			}
+			}	
 		}
 		
-		// go through each row in 2D array and check its columns
-		for(int i = 0; i < rows; i++){
-			for(int j = 0; j < columns; j++){
-				
-			}
+		
+		if(reservedGroup.size()==0){	//there were not enough seats together
+			throw new NotEnoughSeatsException();
 		}
-		
-		
-		
 		return reservedGroup;
+		
 	}
 	
 	
@@ -213,8 +210,8 @@ public class AirplaneSeats {
 		boolean isFull = true;
 		
 		// Check every seat on board. If one is unreserved, isFull is false
-		for(String seat: seatNames){
-			if(seatReservations.get(seat) == false){		
+		for(Map.Entry<String, Boolean> entry : seatReservations.entrySet()){
+				if(entry.getValue() == false){		
 				isFull = false;
 			}
 		}	
