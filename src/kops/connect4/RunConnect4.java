@@ -6,13 +6,12 @@ public class RunConnect4 {
 
 	public static void main(String[] args) {
 		Connect4Board board = new Connect4Board();
-		boolean playAgain = false;
+		//boolean playAgain = false;
 		
-		while(playAgain == true){
-			board.setUp();
-			board.startGame();
-			playAgain = board.playAgain();
-		}
+	//	while(playAgain == true){
+	//		board.startGame();
+	//		playAgain = board.playAgain();
+	//	}
 
 	}
 
