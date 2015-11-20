@@ -16,14 +16,15 @@ public class PieceComponent extends JComponent {
         super.paintComponent(g);
         g.setColor(color);
         g.fillOval(10, 10, 80, 80);
+        super.repaint();
     }
 
 	/*private Color getColor() {
 		
 		return color;
-	}
+	}*/
 	
 	public void setColor(Color color){
 		this.color = color;
-	}*/
+	}
 }

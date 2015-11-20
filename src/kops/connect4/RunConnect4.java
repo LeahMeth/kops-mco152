@@ -1,6 +1,6 @@
 package kops.connect4;
 
-import javax.swing.JFrame;
+
 
 public class RunConnect4 {
 

@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
@@ -26,7 +27,6 @@ public class Connect4Board extends JFrame {
 	private ImageIcon img = new ImageIcon("button images/blue down arrow.PNG");
 	private JButton column1, column2, column3, column4, column5, column6, column7; 
 
-	private PieceComponent piece;
 	boolean haveWinner = false;
 	char player = 'R'; 	//keeps track of which player's turn it is
 						//Red starts
@@ -64,10 +64,10 @@ public class Connect4Board extends JFrame {
 		buttons.add(column2 = new JButton (img));
 		column2.setPreferredSize(new Dimension(100,100));
 		column2.addActionListener(new C2Listener());
-		buttons.add(column3 = new JButton ("Winner:",img));
+		buttons.add(column3 = new JButton (img));
 		column3.setPreferredSize(new Dimension(100,100));
 		column3.addActionListener(new C3Listener());
-		buttons.add(column4 = new JButton ("Player"+player,img));
+		buttons.add(column4 = new JButton (img));
 		column4.setPreferredSize(new Dimension(100,100));
 		column4.addActionListener(new C4Listener());
 		buttons.add(column5 = new JButton (img));
@@ -112,7 +112,7 @@ public class Connect4Board extends JFrame {
 
 
 	
-	
+	// for 
 	public boolean checkIfWon(){
 		boolean won = false;
 		for(int i=0; i< 7; i++){
@@ -171,35 +171,36 @@ public class Connect4Board extends JFrame {
 	//actionListener classes
 	private class C1Listener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			addToRow(1);
-			
-			haveWinner = checkIfWon();
-			
-			//display winner
-			if(haveWinner){
-				column3.setVerticalTextPosition(SwingConstants.TOP);
-				column4.setVerticalTextPosition(SwingConstants.TOP);
-			}
-			
-			else{
-				//toggle player
-				if(player == 'R'){		//if red just moved, switch turn to yellow
-					player = 'Y';
+			if(p1>=0){
+				addToRow(1);
+				
+				haveWinner = checkIfWon();
+				
+				//display winner
+				if(haveWinner){
+					JOptionPane.showMessageDialog(null, "Winner is "+player);
 				}
-				else{					// from yellow, switch back to red
-					player = 'R';
+				
+				else{
+					//toggle player
+					if(player == 'R'){		//if red just moved, switch turn to yellow
+						player = 'Y';
+					}
+					else{					// from yellow, switch back to red
+						player = 'R';
+					}
 				}
 			}
 		}
 	}
 	private class C2Listener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
+			if(p2>=0){
 			addToRow(2);
 			haveWinner = checkIfWon();
 			//display winner
 			if(haveWinner){
-				column3.setVerticalTextPosition(SwingConstants.TOP);
-				column4.setVerticalTextPosition(SwingConstants.TOP);
+				JOptionPane.showMessageDialog(null, "Winner is "+player);
 			}
 			
 			else{
@@ -210,18 +211,18 @@ public class Connect4Board extends JFrame {
 				else{					// from yellow, switch back to red
 					player = 'R';
 				}
-			}
+			}}
 			
 		}
 	}
 	private class C3Listener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
+			if(p3>=0){
 			addToRow(3);
 			haveWinner = checkIfWon();
 			//display winner
 			if(haveWinner){
-				column3.setVerticalTextPosition(SwingConstants.TOP);
-				column4.setVerticalTextPosition(SwingConstants.TOP);
+				JOptionPane.showMessageDialog(null, "Winner is "+player);
 			}
 			
 			else{
@@ -233,17 +234,17 @@ public class Connect4Board extends JFrame {
 					player = 'R';
 				}
 			}
-			
+			}
 		}
 	}
 	private class C4Listener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
+			if(p4>=0){
 			addToRow(4);
 			haveWinner = checkIfWon();
 			//display winner
 			if(haveWinner){
-				column3.setVerticalTextPosition(SwingConstants.TOP);
-				column4.setVerticalTextPosition(SwingConstants.TOP);
+				JOptionPane.showMessageDialog(null, "Winner is "+player);
 			}
 			
 			else{
@@ -254,18 +255,18 @@ public class Connect4Board extends JFrame {
 				else{					// from yellow, switch back to red
 					player = 'R';
 				}
-			}
+			}}
 			
 		}
 	}
 	private class C5Listener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
+			if(p5>=0){
 			addToRow(5);
 			haveWinner = checkIfWon();
 			//display winner
 			if(haveWinner){
-				column3.setVerticalTextPosition(SwingConstants.TOP);
-				column4.setVerticalTextPosition(SwingConstants.TOP);
+				JOptionPane.showMessageDialog(null, "Winner is "+player);
 			}
 			
 			else{
@@ -277,51 +278,51 @@ public class Connect4Board extends JFrame {
 					player = 'R';
 				}
 			}
-			
+			}
 		}
 	}
 	private class C6Listener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			addToRow(6);
-			haveWinner = checkIfWon();
-			//display winner
-			if(haveWinner){
-				column3.setVerticalTextPosition(SwingConstants.TOP);
-				column4.setVerticalTextPosition(SwingConstants.TOP);
-			}
-			
-			else{
-				//toggle player
-				if(player == 'R'){		//if red just moved, switch turn to yellow
-					player = 'Y';
+			if(p6>=0){
+				addToRow(6);
+				haveWinner = checkIfWon();
+				//display winner
+				if(haveWinner){
+					JOptionPane.showMessageDialog(null, "Winner is "+player);
 				}
-				else{					// from yellow, switch back to red
-					player = 'R';
+				
+				else{
+					//toggle player
+					if(player == 'R'){		//if red just moved, switch turn to yellow
+						player = 'Y';
+					}
+					else{					// from yellow, switch back to red
+						player = 'R';
+					}
 				}
 			}
-			
 		}
 	}
 	private class C7Listener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			addToRow(7);
-			haveWinner = checkIfWon();
-			//display winner
-			if(haveWinner){
-				column3.setVerticalTextPosition(SwingConstants.TOP);
-				column4.setVerticalTextPosition(SwingConstants.TOP);
-			}
-			
-			else{
-				//toggle player
-				if(player == 'R'){		//if red just moved, switch turn to yellow
-					player = 'Y';
+			if(p7>=0){
+				addToRow(7);
+				haveWinner = checkIfWon();
+				//display winner
+				if(haveWinner){
+					JOptionPane.showMessageDialog(null, "Winner is "+player);
 				}
-				else{					// from yellow, switch back to red
-					player = 'R';
+				
+				else{
+					//toggle player
+					if(player == 'R'){		//if red just moved, switch turn to yellow
+						player = 'Y';
+					}
+					else{					// from yellow, switch back to red
+						player = 'R';
+					}
 				}
 			}
-			
 		}
 	}
 	
@@ -380,8 +381,7 @@ public class Connect4Board extends JFrame {
 			break;
 		
 		}
-		
-		
+			
 
 		//using the values in the board[][], refill grid layout with updated pieces
 		for(int i = 0; i<7; i++){
@@ -390,20 +390,22 @@ public class Connect4Board extends JFrame {
 					PieceComponent p = new PieceComponent(Color.WHITE);
 					boardGUI[i][j] = p;
 					grid.add(boardGUI[i][j]);
-					grid.repaint();
+					//grid.repaint();
+					
+					
 					
 				}
 				else if(board[i][j] == 1){
 					PieceComponent p = new PieceComponent(Color.RED);
 					boardGUI[i][j] = p;
 					grid.add(boardGUI[i][j]);
-					grid.repaint();
+					//grid.repaint();
 				}
 				else{
 					PieceComponent p = new PieceComponent(Color.YELLOW);
 					boardGUI[i][j] = p;
 					grid.add(boardGUI[i][j]);
-					grid.repaint();
+					//grid.repaint();
 				
 				}
 			}
