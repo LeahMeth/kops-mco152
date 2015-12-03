@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,8 +17,8 @@ import javax.swing.SwingConstants;
 
 public class Connect4Board extends JFrame {
 
-	private PieceComponent boardGUI[][] = new PieceComponent[7][6];	// for GUI purposes
-	private int board[][] = new int[7][6];		// for calculating next spot in column and calculating winner
+	private PieceComponent boardGUI[][] = new PieceComponent[6][7];	// for GUI purposes
+	private int board[][] = new int[6][7];		// for calculating next spot in column and calculating winner
 												// 0 = empty, 1 = red, 2 = yellow
 	//pointers for each column
 	int p1=5, p2=5, p3=5, p4=5, p5=5, p6=5, p7=5;
@@ -32,17 +33,12 @@ public class Connect4Board extends JFrame {
 						//Red starts
 	
 	public Connect4Board(){
-		
-		startGame();
 	}	
 	
 	
 
 	public void startGame() {
-		
 			setUp();	//sets up window and panels and begins game play			
-		
-		
 	}
 	
 	
@@ -52,7 +48,7 @@ public class Connect4Board extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setSize(745,730);
-		
+		setIconImage(img.getImage());
 		
 	    
 		//add buttons to the button panel and connect buttons to actionListeners
@@ -87,11 +83,11 @@ public class Connect4Board extends JFrame {
 		grid.setPreferredSize(new Dimension(740,582));
 		grid.setBackground(Color.BLUE);
 		
-		for(int i = 0; i < 7; i++){
-			for(int j = 0; j <6; j++){
-			boardGUI[i][j] = new PieceComponent(Color.WHITE);
-			board[i][j] = 0;
-            grid.add(boardGUI[i][j]);
+		for(int r = 0; r < 6; r++){
+			for(int c = 0; c < 7; c++){
+			boardGUI[r][c] = new PieceComponent(Color.WHITE);
+			board[r][c] = 0;
+            grid.add(boardGUI[r][c]);
 			
 			}
 		}
@@ -115,31 +111,39 @@ public class Connect4Board extends JFrame {
 	// for 
 	public boolean checkIfWon(){
 		boolean won = false;
-		for(int i=0; i< 7; i++){
-			for(int j=0; j<6; j++){
-				if(board[i][j] == 0){
+		int spot;
+		for(int r = 0; r < 6; r++){	//r = row num
+			for(int c = 0; c < 7; c++){	//c = column num
+				spot = board[r][c];
+				if(spot == 0){	//empty spot
 					break;
 				}
 				else{
-					// if the element is within the last three columns AND the last three rows, it cannot be the start point of a four consecutive numbers
-					if (j >= 3 && i >= 4){
+					// if the element is within the last three columns AND the last three rows,
+					// it cannot be the start point of a four consecutive numbers
+					if(r >= 3 && c >= 4){
 						break;
 					}
 					
-					// Test if this element is the start of a row
+					// Test if this element is the start of a winning sequence
+					
 					// Test for four across
-					if (j < 3 && (board[j][i] == board[j][i+1] && (board[j][i] == board[j][i+2] && board[j][i] == board[j][i+3])) ){
+					else if(spot == board[r][c+1] && spot == board[r][c+2] 
+							&& spot == board[r][c+3]) {
 						won = true;
 					}
 					// test for four down
-					else if (j<3 && (board[j][i] == board[j+1][i] && (board[j][i] == board[j+2][i] && board[j][i] == board[j+3][i])) ){
+					else if( spot == board[r+1][c] && spot == board[r+2][c] 
+							&& spot == board[r+3][c]){
 						won = true;
 					}
 					// test for four diagonal - slanting right or slanting left
-					else if (j<3 && i<4 && (board[j][i] == board[j+1][i+1] && (board[j][i] == board[j+2][i+2] && board[j][i] == board[j+3][i+3])) ){
+					else if(c < 4 && r < 3 && spot == board[r+1][c+1] 
+							&& spot == board[r+2][c+2] && spot == board[r+3][c+3]){
 						won = true;
 					}
-					else if ((i<4 && j<3) && (board[j][i] == board[j+1][i-1] && (board[j][i] == board[j+2][i-2] && board[j][i] == board[j+3][i-3])) ){	
+					else if(c > 2 && r < 2 && spot == board[r+1][c-1] 
+							&& spot == board[r+2][c-2] && spot == board[r+3][c-3]){	
 						won = true;
 					}
 					else;	// won is false
@@ -151,29 +155,11 @@ public class Connect4Board extends JFrame {
 	}
 
 	
-	
-	/*
-	 * implement later?
-	 * 
-	 * public boolean playAgain() {
-		
-		if(){	//if want to play again
-		return true;
-		}
-		else{	//if don't want to play again
-			frame.dispose();
-		}
-			
-	}*/
-
-	
-	
 	//actionListener classes
 	private class C1Listener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			if(p1>=0){
 				addToRow(1);
-				
 				haveWinner = checkIfWon();
 				
 				//display winner
@@ -196,8 +182,9 @@ public class Connect4Board extends JFrame {
 	private class C2Listener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			if(p2>=0){
-			addToRow(2);
-			haveWinner = checkIfWon();
+				addToRow(2);
+				haveWinner = checkIfWon();
+				
 			//display winner
 			if(haveWinner){
 				JOptionPane.showMessageDialog(null, "Winner is "+player);
@@ -205,7 +192,7 @@ public class Connect4Board extends JFrame {
 			
 			else{
 				//toggle player
-				if(player == 'R'){		//if red just moved, switch turn to yellow
+				if(player == 'R'){		// if red just moved, switch turn to yellow
 					player = 'Y';
 				}
 				else{					// from yellow, switch back to red
@@ -218,8 +205,9 @@ public class Connect4Board extends JFrame {
 	private class C3Listener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			if(p3>=0){
-			addToRow(3);
-			haveWinner = checkIfWon();
+				addToRow(3);
+				haveWinner = checkIfWon();
+				
 			//display winner
 			if(haveWinner){
 				JOptionPane.showMessageDialog(null, "Winner is "+player);
@@ -240,8 +228,8 @@ public class Connect4Board extends JFrame {
 	private class C4Listener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			if(p4>=0){
-			addToRow(4);
-			haveWinner = checkIfWon();
+				addToRow(4);
+				haveWinner = checkIfWon();
 			//display winner
 			if(haveWinner){
 				JOptionPane.showMessageDialog(null, "Winner is "+player);
@@ -262,22 +250,22 @@ public class Connect4Board extends JFrame {
 	private class C5Listener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			if(p5>=0){
-			addToRow(5);
-			haveWinner = checkIfWon();
-			//display winner
-			if(haveWinner){
-				JOptionPane.showMessageDialog(null, "Winner is "+player);
-			}
-			
-			else{
-				//toggle player
-				if(player == 'R'){		//if red just moved, switch turn to yellow
-					player = 'Y';
+				addToRow(5);
+				haveWinner = checkIfWon();
+				//display winner
+				if(haveWinner){
+					JOptionPane.showMessageDialog(null, "Winner is "+player);
 				}
-				else{					// from yellow, switch back to red
-					player = 'R';
+				
+				else{
+					//toggle player
+					if(player == 'R'){		//if red just moved, switch turn to yellow
+						player = 'Y';
+					}
+					else{					// from yellow, switch back to red
+						player = 'R';
+					}
 				}
-			}
 			}
 		}
 	}
@@ -342,74 +330,47 @@ public class Connect4Board extends JFrame {
 		}
 		
 		//access this column's pointer and insert
-		int nextSpot = 0;
+		
 		switch(column){
-		case 1:
-			nextSpot = p1;
-			board[column][nextSpot] = num;
-			p1--;
+		case 0:			
+			board[p1--][column] = num;			
 			break;
-		case 2:
-			nextSpot = p2;
-			board[column][nextSpot] = num;
-			p2--;
+		case 1:			
+			board[p2--][column] = num;			
+			break;
+		case 2:			
+			board[p3--][column] = num;			
 			break;
 		case 3:
-			nextSpot = p3;
-			board[column][nextSpot] = num;
-			p3--;
+			board[p4--][column] = num;
 			break;
 		case 4:
-			nextSpot = p4;
-			board[column][nextSpot] = num;
-			p4--;
+			board[p5--][column] = num;
 			break;
 		case 5:
-			nextSpot = p5;
-			board[column][nextSpot] = num;
-			p5--;
+			board[p6--][column] = num;		
 			break;
 		case 6:
-			nextSpot = p6;
-			board[column][nextSpot] = num;
-			p6--;
-			break;
-		case 7:
-			nextSpot = p7;
-			board[column][nextSpot] = num;
-			p7--;
+			board[p7--][column] = num;
 			break;
 		
 		}
 			
 
 		//using the values in the board[][], refill grid layout with updated pieces
-		for(int i = 0; i<7; i++){
-			for(int j =0; j<6;j++){
-				if(board[i][j] == 0){
-					PieceComponent p = new PieceComponent(Color.WHITE);
-					boardGUI[i][j] = p;
-					grid.add(boardGUI[i][j]);
-					//grid.repaint();
-					
-					
-					
+		for(int r = 0; r < 6; r++){
+			for(int c = 0; c < 7; c++){
+				if(board[r][c] == 0){				
+					boardGUI[r][c].changeColor(Color.WHITE);
 				}
-				else if(board[i][j] == 1){
-					PieceComponent p = new PieceComponent(Color.RED);
-					boardGUI[i][j] = p;
-					grid.add(boardGUI[i][j]);
-					//grid.repaint();
+				else if(board[r][c] == 1){				
+					boardGUI[r][c].changeColor(Color.RED);
 				}
-				else{
-					PieceComponent p = new PieceComponent(Color.YELLOW);
-					boardGUI[i][j] = p;
-					grid.add(boardGUI[i][j]);
-					//grid.repaint();
-				
+				else{					
+					boardGUI[r][c].changeColor(Color.YELLOW);
 				}
 			}
-		}
+		}grid.repaint();
 		
 	}
 }

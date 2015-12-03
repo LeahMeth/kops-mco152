@@ -24,7 +24,8 @@ public class PieceComponent extends JComponent {
 		return color;
 	}*/
 	
-	public void setColor(Color color){
+	public void changeColor(Color color){
 		this.color = color;
+		super.repaint();
 	}
 }
