@@ -17,6 +17,10 @@ import javax.swing.SwingConstants;
 
 public class Connect4Board extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private PieceComponent boardGUI[][] = new PieceComponent[6][7];	// for GUI purposes
 	private int board[][] = new int[6][7];		// for calculating next spot in column and calculating winner
 												// 0 = empty, 1 = red, 2 = yellow
@@ -108,51 +112,74 @@ public class Connect4Board extends JFrame {
 
 
 	
-	// for 
+	
 	public boolean checkIfWon(){
 		boolean won = false;
 		int spot;
+		// Test if an element is the start of a winning sequence
+		
+		//test for horizontal
 		for(int r = 0; r < 6; r++){	//r = row num
+			for(int c = 0; c < 4; c++){	//c = column num
+				spot = board[r][c];
+				if(spot == 0){	//empty spot
+					
+				}
+				else if(spot == board[r][c+1] && spot == board[r][c+2] 
+							&& spot == board[r][c+3]) {
+						won = true;
+				}	
+			}
+		}
+					
+					
+					
+		// test for vertical
+		for(int r = 0; r < 3; r++){	//r = row num
 			for(int c = 0; c < 7; c++){	//c = column num
 				spot = board[r][c];
 				if(spot == 0){	//empty spot
-					break;
+					
 				}
-				else{
-					// if the element is within the last three columns AND the last three rows,
-					// it cannot be the start point of a four consecutive numbers
-					if(r >= 3 && c >= 4){
-						break;
-					}
-					
-					// Test if this element is the start of a winning sequence
-					
-					// Test for four across
-					else if(spot == board[r][c+1] && spot == board[r][c+2] 
-							&& spot == board[r][c+3]) {
-						won = true;
-					}
-					// test for four down
-					else if( spot == board[r+1][c] && spot == board[r+2][c] 
+				else if(spot == board[r+1][c] && spot == board[r+2][c] 
 							&& spot == board[r+3][c]){
 						won = true;
-					}
-					// test for four diagonal - slanting right or slanting left
-					else if(c < 4 && r < 3 && spot == board[r+1][c+1] 
+				}	
+			}
+		}
+		
+		
+		// test for four diagonal - slanting right 
+		for(int r = 0; r < 3; r++){	//r = row num
+			for(int c = 0; c < 4; c++){	//c = column num
+				spot = board[r][c];
+				if(spot == 0){	//empty spot
+					
+				}
+				else if(spot == board[r+1][c+1] 
 							&& spot == board[r+2][c+2] && spot == board[r+3][c+3]){
 						won = true;
-					}
-					else if(c > 2 && r < 2 && spot == board[r+1][c-1] 
+				}	
+			}
+		}
+			
+		
+		//test for diagonal - slanting left
+		for(int r = 0; r < 3; r++){	//r = row num
+			for(int c = 3; c < 7; c++){	//c = column num
+				spot = board[r][c];
+				if(spot == 0){	//empty spot
+					
+				}
+				else if(c > 2 && r < 2 && spot == board[r+1][c-1] 
 							&& spot == board[r+2][c-2] && spot == board[r+3][c-3]){	
 						won = true;
-					}
-					else;	// won is false
-				}
+				}	
 			}
 		}
 		
 		return won;
-	}
+	}// end checkIfWon()
 
 	
 	//actionListener classes
@@ -370,7 +397,8 @@ public class Connect4Board extends JFrame {
 					boardGUI[r][c].changeColor(Color.YELLOW);
 				}
 			}
-		}grid.repaint();
+		}
+		grid.repaint();
 		
 	}
 }
