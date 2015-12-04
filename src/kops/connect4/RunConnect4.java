@@ -1,8 +1,8 @@
 package kops.connect4;
 
-import java.util.Scanner;
+//import java.util.Scanner;
 
-import javax.swing.JOptionPane;
+//import javax.swing.JOptionPane;
 
 
 
@@ -10,8 +10,8 @@ public class RunConnect4 {
 
 	public static void main(String[] args) {
 		Connect4Board board = new Connect4Board();
-		Scanner in = new Scanner(System.in);
-		char playAgain;
+		//Scanner in = new Scanner(System.in);
+		//char playAgain;
 		board.startGame();
 		
 		

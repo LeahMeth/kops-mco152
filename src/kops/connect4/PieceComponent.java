@@ -7,6 +7,10 @@ import javax.swing.JComponent;
 
 public class PieceComponent extends JComponent {
     
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Color color;
 	public PieceComponent(Color color){
     	this.color = color;
