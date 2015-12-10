@@ -14,7 +14,7 @@ public class HttpURLConnectionDemo {
 		
 		//connect - in HW will concatenate zip into below link
 		
-		URL url = new URL("http://api.openweathermap.org/data/2.5/weather?zip=11367,us&appid=2de143494c0b295cca9337e1e96b00e0&units_imperial");
+		URL url = new URL("http://api.openweathermap.org/data/2.5/weather?zip=11367,us&appid=2de143494c0b295cca9337e1e96b00e0&units=imperial");
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		
 		//read stream
