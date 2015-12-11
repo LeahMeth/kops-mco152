@@ -1,12 +1,15 @@
 package kops.weather;
 
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
 public class RunWeather {
 
 	public static void main(String[] args) {
 		
+		new WeatherFrame().setVisible(true);
 		
-		//will get ARRAY of Weather objects
-		// and also get a main object 
 		
 		
 		//need http://openweathermap.org/
