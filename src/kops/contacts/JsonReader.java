@@ -15,30 +15,28 @@ public class JsonReader {
 	private Contact contact;
 	private String urlString;
 	private Contact[] contacts;
-	
-	public JsonReader(){
+
+	public JsonReader() {
 		urlString = "http://jsonplaceholder.typicode.com/users";
-		try{
+		try {
 			URL url = new URL(urlString);
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			HttpURLConnection connection = (HttpURLConnection) url
+					.openConnection();
 			InputStream in = connection.getInputStream();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-			
-			//get array of Contacts from Json
+			BufferedReader reader = new BufferedReader(
+					new InputStreamReader(in));
+
+			// get array of Contacts from Json
 			Gson gson = new Gson();
 			this.contacts = gson.fromJson(reader, Contact[].class);
-					
-			
-		}catch(IOException e){
+
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 	}
-	
-	
-	
-	public Contact[] getContacts(){
+
+	public Contact[] getContacts() {
 		return this.contacts;
 	}
 }
