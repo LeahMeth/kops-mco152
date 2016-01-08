@@ -1,16 +1,30 @@
-package kops.twitter;
+package kops.chat;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JTextArea;
 
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 
-public class TwitterHandler extends AbstractHandler {
+public class ChatP2PHandler extends AbstractHandler {
+
+	private JTextArea area;
 	
+	
+	public ChatP2PHandler(JTextArea area) {
+			this.area = area;
+	}
+
+
 	@Override
 	public void handle(String target,
 			Request baseRequest,
@@ -21,9 +35,12 @@ public class TwitterHandler extends AbstractHandler {
 		response.setContentType("text/html;charset=utf-8");
 		response.setStatus(HttpServletResponse.SC_OK);	//status code - 200
 		baseRequest.setHandled(true);
-		response.getWriter().println("<h1>Hello World!!</h1><h2>Hello World!!</h2>");
+	
+		InputStream input = request.getInputStream();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+		area.append(reader.readLine()+"\n");
+		
 		
 	}
-
 
 }
